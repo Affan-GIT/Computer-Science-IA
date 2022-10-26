@@ -1,17 +1,13 @@
-import React from 'react';
+import React from "react";
+import Link from "next/link";
 
 type Props = {};
 
 const Logo = (props: Props) => {
   return (
-    <div
-      className='text-5xl cursor-pointer'
-      onClick={() => {
-        window.location.assign('../Landing');
-      }}
-    >
-      Logo
-    </div>
+    <Link href="../Landing">
+      <div className="text-5xl cursor-pointer">Logo</div>
+    </Link>
   );
 };
 

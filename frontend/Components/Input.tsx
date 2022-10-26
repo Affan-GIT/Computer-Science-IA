@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FieldErrorsImpl } from 'react-hook-form';
+import React, { useState } from "react";
+import { FieldErrorsImpl } from "react-hook-form";
 
 type InputProps = {
   register: Function;
@@ -15,15 +15,16 @@ const Input = ({ register, errors, inputName, initialValue }: InputProps) => {
   const { onChange, onBlur, name, ref } = register(inputName);
   return (
     <div
-      className='relative flex flex-col m-5'
+      className="relative flex flex-col m-5"
       onClick={() => {
         setFocus(true);
       }}
     >
-      <div className='relative border-2 border-black rounded-[10px] -z-0'>
+      <div className="relative border-2 border-black rounded-[10px] -z-0">
         <input
+          autocomplete="off"
           onChange={onChange}
-          className='text-2xl bg-transparent p-3 outline-none z-10 w-full'
+          className="text-2xl bg-transparent p-3 outline-none z-10 w-full"
           ref={ref}
           name={name}
           onFocus={() => {
@@ -39,31 +40,31 @@ const Input = ({ register, errors, inputName, initialValue }: InputProps) => {
         {!initialValue ? (
           <div
             style={{
-              position: 'absolute',
-              top: focus ? '0%' : '50%',
-              transform: 'translateY(-50%)',
-              left: '10px',
-              transition: 'all',
-              backgroundColor: focus ? 'white' : 'transparent',
-              transitionDuration: '100ms',
-              transitionDelay: '0',
-              paddingRight: '3px',
-              paddingLeft: '3px',
-              fontSize: focus ? '' : '1.5rem',
-              zIndex: '-1',
-              color: errors && errors[name]?.message ? 'red' : 'black',
+              position: "absolute",
+              top: focus ? "0%" : "50%",
+              transform: "translateY(-50%)",
+              left: "10px",
+              transition: "all",
+              backgroundColor: focus ? "white" : "transparent",
+              transitionDuration: "100ms",
+              transitionDelay: "0",
+              paddingRight: "3px",
+              paddingLeft: "3px",
+              fontSize: focus ? "" : "1.5rem",
+              zIndex: "-1",
+              color: errors && errors[name]?.message ? "red" : "black",
             }}
           >
             {Array.from(inputName)
-              .map((char) => (char.match(/[A-Z]/) ? ' ' + char : char))
-              .join('')}
+              .map((char) => (char.match(/[A-Z]/) ? " " + char : char))
+              .join("")}
           </div>
         ) : (
           <div></div>
         )}
       </div>
-      <span className='text-red-500 text-md text-center'>
-        {`${errors[name]?.message || ''}`}
+      <span className="text-red-500 text-md text-center">
+        {`${errors[name]?.message || ""}`}
       </span>
     </div>
   );

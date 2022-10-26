@@ -1,68 +1,125 @@
-import React, { useState, useEffect } from 'react';
-import Header from '../../Components/Header';
+import React, { useState, useEffect } from "react";
+import Header from "../../Components/Header";
+import axios from "axios";
+import { addToCart } from "../../store/cartSlice";
+import { useDispatch } from "react-redux";
 
 type Props = {};
 
 const Product = (props: Props) => {
   const [product, setProduct] = useState({});
-  const [color, setColor] = useState('');
-  const [size, setSize] = useState('');
+  const [variants, setVariants] = useState({});
+  const [selectedVariant, setSelectedVariant] = useState("");
+
   useEffect(() => {
     setProduct({
-      productName: window.location.pathname.split('/')[2].replace('%20', ' '),
+      productName: window.location.pathname
+        .split("/")[2]
+        .replaceAll("%20", " "),
     });
   }, []);
+  useEffect(() => {
+    product.productName &&
+      axios
+        .get(
+          `http://localhost:5000/api/v1/products/Product/${product.productName}`
+        )
+        .then((result) => {
+          setProduct(result.data[0]);
+          result.data[0].Variants.split("|").forEach((variant) =>
+            Object.keys(variants).includes(`${variant.split("_")[1]}`)
+              ? variants[`${variant.split("_")[1]}`].push(variant.split("_")[0])
+              : (variants[`${variant.split("_")[1]}`] = [variant.split("_")[0]])
+          );
+        });
+  }, [product]);
+
+  const dispatch = useDispatch();
+
+  const addHandler = () => {
+    dispatch(
+      addToCart({
+        ProductName: product.ProductName,
+        ProductVariant: selectedVariant.split("_").join(", "),
+        price: product.ProductPrice,
+        ProductImg: product.ProductImg,
+      })
+    );
+  };
+
   return (
     <div>
       <Header />
-      <div className='flex w-screen h-full items-center px-40 mt-10'>
-        <div className='w-[30vw] h-[80vh] bg-black'></div>
-        <div className='flex h-[80vh] flex-col ml-40'>
-          <h1 className='text-7xl mb-2'>{product.productName}</h1>
-          <h2 className='text-3xl mb-5'>{product.productPrice || 0}</h2>
-          <p className='max-w-xl mb-5'>
-            {product.productDescription} Lorem ipsum dolor sit, amet consectetur
-            adipisicing elit. Accusantium quas, nobis minima consectetur enim
-            necessitatibus rerum sed voluptas id ullam sapiente, magni magnam.
-            Distinctio voluptate quasi quod tempore cupiditate recusandae, dicta
-            obcaecati, sint accusamus repellendus ipsa consectetur. Vel
-            voluptatum consequatur voluptas! Neque ex hic aliquam corrupti
-            deleniti eius sed adipisci.
-          </p>
-          <div className='mb-5'>
-            <h3 className='text-3xl mb-2'>Colors:</h3>
-            <div className='flex gap-5'>
-              <div
-                className='w-[50px] h-[50px] bg-red-500 rounded-full cursor-pointer'
-                onClick={() => setColor('red')}
-              ></div>
-              <div
-                className='w-[50px] h-[50px] bg-green-500 rounded-full cursor-pointer'
-                onClick={() => setColor('green')}
-              ></div>
-              <div
-                className='w-[50px] h-[50px] bg-blue-500 rounded-full cursor-pointer'
-                onClick={() => setColor('blue')}
-              ></div>
-            </div>
+      <div className="flex w-screen h-full items-center px-40 mt-10">
+        {product.ProductImg ? (
+          <div>
+            <img
+              src={`http://localhost:5000/${product.ProductImg}.webp`}
+              alt=""
+            />
           </div>
-          <div className='mb-5'>
-            <h3 className='text-3xl mb-2'>Sizes:</h3>
-            <div className='flex gap-5'>
-              <div className='w-[50px] h-[50px] border-2 border-black rounded-full flex items-center justify-center text-2xl cursor-pointer'>
-                XL
+        ) : (
+          <div className="w-[30vw] h-[80vh] bg-black"></div>
+        )}
+
+        <div className="flex h-[80vh] flex-col ml-40">
+          <h1 className="text-7xl mb-2">{product.ProductName}</h1>
+          <h2 className="text-3xl mb-5">
+            <small className="mr-1">₹</small>
+            {product.ProductPrice || 0}
+          </h2>
+          <p className="max-w-xl mb-5">{product.ProductDescription}</p>
+          <div className="flex gap-5 items-center mb-5">
+            <h3>Sizes: </h3>
+            {Object.keys(variants).map((size, key1) => (
+              <div key={key1}>
+                <h3>{size}</h3>
+                <div>
+                  {variants[size].map((color, key2) => (
+                    <div
+                      key={key2}
+                      className="flex flex-col items-center cursor-pointer"
+                      onClick={() => {
+                        setSelectedVariant(color + "_" + size);
+                      }}
+                    >
+                      <div
+                        className={"w-[30px] h-[30px] rounded-full"}
+                        style={{
+                          backgroundColor: color,
+                          border:
+                            selectedVariant.split("_")[0] === color &&
+                            selectedVariant.split("_")[1] === size
+                              ? "3px solid black"
+                              : "",
+                        }}
+                      ></div>
+                      <small
+                        className="text-lg"
+                        style={{
+                          color:
+                            selectedVariant.split("_")[0] === color &&
+                            selectedVariant.split("_")[1] === size
+                              ? "black"
+                              : color,
+                        }}
+                      >
+                        {color}
+                      </small>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className='w-[50px] h-[50px] border-2 border-black rounded-full flex items-center justify-center text-2xl cursor-pointer'>
-                L
-              </div>
-              <div className='w-[50px] h-[50px] border-2 border-black rounded-full flex items-center justify-center text-2xl cursor-pointer'>
-                M
-              </div>
-            </div>
+            ))}
           </div>
           <div>
-            <button className='cursor-pointer px-3 py-1 bg-black text-white rounded-[5px] text-2xl mb-5'>
-              Add To Cart
+            <button
+              className="cursor-pointer px-3 py-1 bg-black text-white rounded-[5px] text-2xl mb-5"
+              onClick={() => {
+                addHandler();
+              }}
+            >
+              Add to cart
             </button>
           </div>
         </div>

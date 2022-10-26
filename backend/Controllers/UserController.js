@@ -1,4 +1,4 @@
-const User = require('../Database/UserDatabase');
+const User = require("../Database/UserDatabase");
 const UserDatabase = new User();
 
 const addUser = async (req, res) => {
@@ -43,6 +43,15 @@ const updateUserAddresses = async (req, res) => {
   UserDatabase.updateUserAddresses(req.user, req.body, res);
 };
 
+const getProfilePic = async (req, res) => {
+  UserDatabase.getProfilePic(req.user, res);
+};
+
+const updateProfilePic = async (req, res) => {
+  delete req.body.token;
+  UserDatabase.updateProfilePic(req, res);
+};
+
 module.exports = {
   addUser,
   signInUser,
@@ -54,4 +63,6 @@ module.exports = {
   getUserAddresses,
   getOrders,
   updateUserAddresses,
+  updateProfilePic,
+  getProfilePic,
 };
