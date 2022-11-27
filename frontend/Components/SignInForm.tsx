@@ -101,9 +101,6 @@ const SignInForm = (props: Props) => {
         <div>
           {!OTPForm ? (
             <>
-              <h3 className="text-xl text-center my-5">
-                (Enter Phone Number and leave password for OTP Login)
-              </h3>
               <Input
                 register={register}
                 errors={errors}
@@ -115,6 +112,9 @@ const SignInForm = (props: Props) => {
             <OTP PhoneNumber={phoneNumber} NewUser={false} />
           )}
         </div>
+        <h3 className="text-sm text-gray-500 text-center mb-5 mt-[-15px]">
+          (Enter Phone Number and leave password for OTP login)
+        </h3>
         <div className="flex justify-center mb-3">
           <Link href="SignUp">
             <div className="text-xl underline text-blue-500 cursor-pointer">

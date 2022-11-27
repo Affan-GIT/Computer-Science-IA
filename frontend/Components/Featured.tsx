@@ -22,9 +22,7 @@ const Featured = (props: Props) => {
         />
       </div>
       <div className="cursor-pointer">
-        <AiOutlineRight
-          onClick={() => setImage(image >= 10 ? 10 : image + 1)}
-        />
+        <AiOutlineRight onClick={() => setImage(image >= 3 ? 3 : image + 1)} />
       </div>
     </div>
   );

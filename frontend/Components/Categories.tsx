@@ -26,7 +26,7 @@ const Categories = (props: Props) => {
       {categories.map((category, index) => (
         <Link href={`/Categories/${category}`}>
           <span
-            className="px-5 py-1 cursor-pointer whitespace-nowrap"
+            className="px-5 py-1 cursor-pointer whitespace-nowrap text-gray-500 hover:text-black"
             key={index}
           >
             {category}

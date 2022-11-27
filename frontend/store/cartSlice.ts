@@ -17,7 +17,10 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-        return state.cartState.map(product=>product.ProductName).indexOf(action.payload.ProductName) !== -1 ? state :  {...state, cartState: [...state.cartState, action.payload], totalQuantity: state.totalQuantity+1, totalPrice: state.totalPrice+action.payload.price}
+      return state.cartState.map(product => product.ProductName).indexOf(action.payload.ProductName) !== -1 ? state : {
+        ...state, cartState: [...state.cartState, action.payload],
+        totalQuantity: state.totalQuantity + 1, totalPrice: state.totalPrice + action.payload.price
+      }
     },
     removeFromCart(state, action) {
         const cartState = [...state.cartState.filter((product) => product.ProductName != action.payload.ProductName)]

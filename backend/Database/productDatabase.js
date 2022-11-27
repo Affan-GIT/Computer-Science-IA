@@ -149,7 +149,7 @@ class Product {
               }
             );
           } else {
-            res.status(200).send("variant Already Exists");
+            res.status(200).send("Variant Already Exists");
           }
         }
       }

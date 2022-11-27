@@ -7,6 +7,7 @@ import OTP from "./OTP";
 import Link from "next/link";
 
 type Props = {};
+
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const validationSchema = object({
@@ -29,6 +30,7 @@ const validationSchema = object({
     .required("Please re-enter the Password")
     .oneOf([ref("Password"), null], "Passwords must match"),
 });
+
 const useYupValidationResolver = (validationSchema: { validate: Function }) =>
   useCallback(
     async (data: {
@@ -69,7 +71,6 @@ const useYupValidationResolver = (validationSchema: { validate: Function }) =>
 const RegistrationForm = (props: Props) => {
   const [formNum, setFormNum] = useState(0);
   const [Phonenumber, setPhoneNumber] = useState("");
-
   const resolver = useYupValidationResolver(validationSchema);
   const {
     handleSubmit,

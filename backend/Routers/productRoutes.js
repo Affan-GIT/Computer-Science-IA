@@ -13,9 +13,7 @@ const {
   removeProduct,
   modifyProduct,
   updateCategoryPic,
-  getCategoryPic,
   updateProductPic,
-  getProductPic,
 } = require("../Controllers/ProductController");
 const auth = require("../Middleware/auth");
 const productRouter = express.Router();

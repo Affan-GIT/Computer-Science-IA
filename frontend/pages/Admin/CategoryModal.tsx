@@ -70,18 +70,24 @@ const CategoryModal = ({ setOpenCategoryModal }: Props) => {
         className="absolute w-screen h-screen bg-black bg-opacity-50 cursor-pointer"
         onClick={() => setOpenCategoryModal(false)}
       ></div>
-      <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[25vw] bg-white cursor-default rounded-lg">
+      <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[50vw] h-[90vh] bg-white cursor-default rounded-lg">
         <div className="w-full h-full p-10 text-lg">
-          <h1 className="text-3xl">Categories</h1>
-          <div className="border-2 border-black rounded-md p-5">
+          <h1 className="text-5xl text-center mb-5">Categories</h1>
+          <h2 className="text-red-500 text-xl text-center mb-5">
+            {showErr ? <div>Category Already Exists</div> : ""}
+          </h2>
+          <div className="border-2 border-black rounded-md p-5 h-[70%] overflow-y-scroll">
             {categories.map((category, key) => (
-              <div key={key} className="flex items-center">
-                <div>{category.CategoryName}</div>
-                <div>
+              <div key={key} className="flex items-center mb-10">
+                <div className="border-2 border-black rounded-md overflow-hidden object-contain">
                   <img
                     src={`http://localhost:5000/${category.CategoryImg}.webp`}
                     alt=""
+                    className="w-[70px]"
                   />
+                </div>
+                <div className="text-3xl mx-10 flex-1">
+                  {category.CategoryName}
                 </div>
                 <form>
                   <input
@@ -98,21 +104,33 @@ const CategoryModal = ({ setOpenCategoryModal }: Props) => {
                   onClick={() => {
                     fileRef.current.click();
                   }}
+                  className="cursor-pointer px-3 py-1 bg-white text-black border-2 border-black rounded-[5px] text-xl mx-10 hover:bg-black hover:text-white"
                 >
                   Upload Image
                 </button>
-                <button onClick={() => removeCategory(category.CategoryName)}>
+                <button
+                  onClick={() => removeCategory(category.CategoryName)}
+                  className="cursor-pointer px-3 py-1 bg-white text-black border-2 border-black rounded-[5px] text-2xl hover:bg-black hover:text-white"
+                >
                   X
                 </button>
               </div>
             ))}
           </div>
-          <div>
-            <input ref={categoryRef} type="text" />
-            <input type="submit" value="Add" onClick={() => addCategory()} />
+          <div className="mt-5 flex justify-center gap-4">
+            <input
+              ref={categoryRef}
+              type="text"
+              className="border-2 border-black outline-none rounded-md px-2 py-1 text-2xl"
+            />
+            <input
+              type="submit"
+              value="Add"
+              onClick={() => addCategory()}
+              className="cursor-pointer px-3 py-1 bg-white text-black border-2 border-black rounded-[5px] text-2xl hover:bg-black hover:text-white"
+            />
           </div>
         </div>
-        {showErr ? <div>Category Already Exists</div> : ""}
       </div>
     </div>
   );

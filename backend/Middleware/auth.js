@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     req.body.file ? (req.file = req.body.file) : "";
-    if (req.user.email === "affanhamid007@gmail.com") {
+    if (req.user.email === process.env.adminEmail) {
       req.user.isAdmin = true;
     }
   } catch (err) {

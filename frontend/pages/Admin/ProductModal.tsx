@@ -106,20 +106,22 @@ const ProductModal = ({ setOpenProductModal, productToChange }: Props) => {
         className="absolute w-screen h-screen bg-black bg-opacity-50 cursor-pointer"
         onClick={() => setOpenProductModal(false)}
       ></div>
-      <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[50vw] h-[75vh] bg-white cursor-default rounded-lg">
+      <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-[50vw] h-[90vh] bg-white cursor-default rounded-lg">
         <div className="w-full h-full py-10 px-20 b-5 flex flex-col text-3xl items-center justify-evenly text-xl">
-          <div>
+          <div className="flex flex-col items-center">
             <div
               onClick={() => {
                 fileRef.current.click();
               }}
+              className="mb-5"
             >
               {productToChange.ProductImg ? (
                 <img
                   src={`http://localhost:5000/${productToChange.ProductImg}.webp`}
+                  className="w-[100px] cursor-pointer"
                 />
               ) : (
-                <div className="w-[150px] h-[150px] bg-black"></div>
+                <div className="w-[150px] h-[150px] bg-black rounded-md cursor-pointer"></div>
               )}
             </div>
             <form>
@@ -133,20 +135,22 @@ const ProductModal = ({ setOpenProductModal, productToChange }: Props) => {
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </form>
-            <div>
-              <div className="flex gap-3">
-                <span>Name:</span>
+            <div className="flex gap-5">
+              <div className="flex gap-3 items-center">
+                <span className="text-2xl">Name:</span>
                 <input
                   ref={nameRef}
-                  className="w-[100px]"
+                  className="w-[100px] outline-none px-1 py-1 border-[1px] border-black rounded-sm text-xl"
                   defaultValue={productToChange.ProductName}
                 />
               </div>
               <div className="flex gap-1 items-center">
-                Price:<small className="text-xl">₹</small>
+                <span className="text-2xl">Price:</span>
+                <small className="text-xl">₹</small>
                 <input
                   ref={priceRef}
-                  className="w-[100px]"
+                  type="numeric"
+                  className="w-[100px] outline-none px-1 py-1 border-[1px] border-black rounded-sm text-lg"
                   defaultValue={productToChange.ProductPrice}
                 />
               </div>
@@ -154,28 +158,31 @@ const ProductModal = ({ setOpenProductModal, productToChange }: Props) => {
           </div>
           <textarea
             ref={descRef}
-            className="w-[80%] h-[300px] text-black text-xl"
+            className="w-[80%] h-[200px] text-black text-xl border-[1px] border-black rounded-md mt-5 p-2"
             defaultValue={productToChange.ProductDescription}
+            placeholder="Description"
           />
-          <div>
-            Category:{" "}
-            <select
-              onChange={(e) => {
-                setSelectedCategory(e.target.value);
-              }}
-            >
-              {categories.map((category) =>
-                category.value === productToChange.CategoryName ? (
-                  <option selected>{category.value}</option>
-                ) : (
-                  <option>{category.value}</option>
-                )
-              )}
-            </select>
-          </div>
-          <div>
-            <div className="flex items-center">
-              <span> Color:</span>
+          <div className="flex items-center gap-5">
+            <div className="flex items-center gap-3">
+              <span>Category:</span>
+              <select
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                }}
+                className="border-[1px] border-gray-300 rounded-sm cursor-pointer text-xl py-[5px] px-2"
+              >
+                {categories.map((category) =>
+                  category.value === productToChange.CategoryName ? (
+                    <option selected>{category.value}</option>
+                  ) : (
+                    <option>{category.value}</option>
+                  )
+                )}
+              </select>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span>Variant:</span>
               <MultiSelect
                 options={variants}
                 optionSelected={selectedVariants}

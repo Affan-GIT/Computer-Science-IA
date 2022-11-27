@@ -24,7 +24,7 @@ const CartItem = ({ product, key }: Props) => {
   return (
     <div
       key={key}
-      className="w-full py-10 px-5 border-2 border-black rounded-[10px] mb-5 flex text-3xl items-center"
+      className="w-full p-2 border-2 border-black rounded-[10px] mb-5 flex text-3xl items-center"
     >
       <div className="flex flex-1 items-center">
         <div className="mr-10">
@@ -33,6 +33,7 @@ const CartItem = ({ product, key }: Props) => {
               <img
                 src={`http://localhost:5000/${product.ProductImg}.webp`}
                 alt=""
+                className="w-[100px] rounded-md"
               />
             </div>
           ) : (
@@ -51,7 +52,7 @@ const CartItem = ({ product, key }: Props) => {
       </div>
 
       <div
-        className="cursor-pointer px-3 py-1 bg-black text-white rounded-[5px] text-2xl"
+        className="cursor-pointer px-3 py-1 bg-black text-white rounded-[5px] text-2xl mr-10"
         onClick={() => {
           removeHandler();
         }}

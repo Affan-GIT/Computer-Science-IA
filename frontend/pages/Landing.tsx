@@ -1,9 +1,9 @@
-import React from 'react';
-import Categories from '../Components/Categories';
-import Featured from '../Components/Featured';
-import Footer from '../Components/Footer';
-import Header from '../Components/Header';
-import Sales from '../Components/Sales';
+import React from "react";
+import Categories from "../Components/Categories";
+import Featured from "../Components/Featured";
+import Footer from "../Components/Footer";
+import Header from "../Components/Header";
+import LandingProducts from "../Components/LandingProducts";
 
 type Props = {};
 
@@ -13,7 +13,7 @@ const Landing = (props: Props) => {
       <Header />
       <Categories />
       <Featured />
-      <Sales />
+      <LandingProducts />
       <Footer />
     </div>
   );

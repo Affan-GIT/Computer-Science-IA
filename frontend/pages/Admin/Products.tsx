@@ -36,11 +36,11 @@ const Products = (props: Props) => {
       )}
       <div>
         <div className="py-10 px-5 flex gap-5">
-          <div className="cursor-pointer px-3 py-1 bg-black text-white rounded-[5px] text-2xl">
+          <div className="cursor-pointer px-3 py-1 bg-white text-black border-2 border-black rounded-[5px] text-2xl hover:bg-black hover:text-white">
             <Link href="../../Landing">Go Back to Website</Link>
           </div>
           <button
-            className="cursor-pointer px-3 py-1 bg-black text-white rounded-[5px] text-2xl"
+            className="cursor-pointer px-3 py-1 bg-white text-black border-2 border-black rounded-[5px] text-2xl hover:bg-black hover:text-white"
             onClick={() => {
               setOpenProductModal(true);
               setProductToChange({
@@ -56,7 +56,7 @@ const Products = (props: Props) => {
             Add New Product
           </button>
           <button
-            className="cursor-pointer px-3 py-1 bg-black text-white rounded-[5px] text-2xl"
+            className="cursor-pointer px-3 py-1 bg-white text-black border-2 border-black rounded-[5px] text-2xl hover:bg-black hover:text-white"
             onClick={() => {
               setOpenCategoryModal(true);
             }}
@@ -64,7 +64,7 @@ const Products = (props: Props) => {
             Categories
           </button>
           <button
-            className="cursor-pointer px-3 py-1 bg-black text-white rounded-[5px] text-2xl"
+            className="cursor-pointer px-3 py-1 bg-white text-black border-2 border-black rounded-[5px] text-2xl hover:bg-black hover:text-white"
             onClick={() => {
               setOpenVariantModal(true);
             }}
@@ -72,7 +72,7 @@ const Products = (props: Props) => {
             Variations
           </button>
         </div>
-        <div>
+        <div className="p-10">
           {allProducts.map((product, key) => (
             <Product
               key={key}

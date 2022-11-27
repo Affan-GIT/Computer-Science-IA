@@ -105,7 +105,7 @@ class User {
         }
       }
     );
-    console.log(OTP);
+    OTPSender(OTP);
   }
 
   async checkOTP(body, res) {

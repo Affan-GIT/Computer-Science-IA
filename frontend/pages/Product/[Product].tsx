@@ -3,12 +3,13 @@ import Header from "../../Components/Header";
 import axios from "axios";
 import { addToCart } from "../../store/cartSlice";
 import { useDispatch } from "react-redux";
+import Footer from "../../Components/Footer";
 
 type Props = {};
 
 const Product = (props: Props) => {
   const [product, setProduct] = useState({});
-  const [variants, setVariants] = useState({});
+  const [variants, setVariants] = useState([]);
   const [selectedVariant, setSelectedVariant] = useState("");
 
   useEffect(() => {
@@ -26,11 +27,8 @@ const Product = (props: Props) => {
         )
         .then((result) => {
           setProduct(result.data[0]);
-          result.data[0].Variants.split("|").forEach((variant) =>
-            Object.keys(variants).includes(`${variant.split("_")[1]}`)
-              ? variants[`${variant.split("_")[1]}`].push(variant.split("_")[0])
-              : (variants[`${variant.split("_")[1]}`] = [variant.split("_")[0]])
-          );
+          const temp = result.data[0].Variants.split("|");
+          setVariants(temp);
         });
   }, [product]);
 
@@ -50,7 +48,7 @@ const Product = (props: Props) => {
   return (
     <div>
       <Header />
-      <div className="flex w-screen h-full items-center px-40 mt-10">
+      <div className="flex w-screen h-full items-center px-40 my-10">
         {product.ProductImg ? (
           <div>
             <img
@@ -69,46 +67,27 @@ const Product = (props: Props) => {
             {product.ProductPrice || 0}
           </h2>
           <p className="max-w-xl mb-5">{product.ProductDescription}</p>
-          <div className="flex gap-5 items-center mb-5">
-            <h3>Sizes: </h3>
-            {Object.keys(variants).map((size, key1) => (
-              <div key={key1}>
-                <h3>{size}</h3>
-                <div>
-                  {variants[size].map((color, key2) => (
-                    <div
-                      key={key2}
-                      className="flex flex-col items-center cursor-pointer"
-                      onClick={() => {
-                        setSelectedVariant(color + "_" + size);
-                      }}
-                    >
-                      <div
-                        className={"w-[30px] h-[30px] rounded-full"}
-                        style={{
-                          backgroundColor: color,
-                          border:
-                            selectedVariant.split("_")[0] === color &&
-                            selectedVariant.split("_")[1] === size
-                              ? "3px solid black"
-                              : "",
-                        }}
-                      ></div>
-                      <small
-                        className="text-lg"
-                        style={{
-                          color:
-                            selectedVariant.split("_")[0] === color &&
-                            selectedVariant.split("_")[1] === size
-                              ? "black"
-                              : color,
-                        }}
-                      >
-                        {color}
-                      </small>
-                    </div>
-                  ))}
-                </div>
+          <div className="flex gap-5 items-center mb-5 cursor-pointer">
+            {variants.map((variant, key1) => (
+              <div
+                key={key1}
+                className="flex flex-col items-center p-1 rounded-md"
+                style={{
+                  backgroundColor: variant.split("_")[0].toLowerCase(),
+                  border:
+                    selectedVariant.split("_")[0] === variant.split("_")[0] &&
+                    selectedVariant.split("_")[1] === variant.split("_")[1]
+                      ? "2px solid black"
+                      : "none",
+                }}
+                onClick={() => {
+                  setSelectedVariant(variant);
+                }}
+              >
+                {variant.split("_")[0][0] +
+                  variant.split("_")[0].slice(1).toLowerCase() +
+                  " " +
+                  variant.split("_")[1]}
               </div>
             ))}
           </div>
@@ -124,6 +103,7 @@ const Product = (props: Props) => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

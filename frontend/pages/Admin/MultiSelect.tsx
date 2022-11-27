@@ -23,16 +23,16 @@ const MultiSelect = ({ options, optionSelected, setOptionSelected }) => {
   };
   return (
     <span
-      class="d-inline-block"
+      className="d-inline-block w-[250px] border-black"
       data-toggle="popover"
       data-trigger="focus"
-      data-content="Please selecet account(s)"
+      data-content="Please select variant(s)"
     >
       <ReactSelect
         options={options}
         isMulti
         closeMenuOnSelect={false}
-        hideSelectedOptions={false}
+        hideSelectedOptions={true}
         components={{
           Option,
         }}

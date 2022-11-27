@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Header from "../Components/Header";
 import DisplayItem from "../Components/DisplayItem";
+import Footer from "../Components/Footer";
 
 type Props = {};
 
@@ -29,15 +30,18 @@ const SearchResult = (props: Props) => {
       />
       <div>
         {results.length === 0 ? (
-          <div>No results found</div>
+          <div className="text-center my-5 bold text-3xl">No results found</div>
         ) : (
-          <div>
-            {results.map((result) => (
-              <DisplayItem product={result} />
-            ))}
+          <div className="flex justify-center my-10">
+            <div className="grid grid-cols-3 ">
+              {results.map((result) => (
+                <DisplayItem product={result} />
+              ))}
+            </div>
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

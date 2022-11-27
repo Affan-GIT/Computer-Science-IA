@@ -222,7 +222,7 @@ const Profile = (props: Props) => {
                 </div>
                 <div>
                   <div
-                    className=" relative w-[300px] h-[300px] bg-black rounded-full overflow-hidden group"
+                    className=" relative w-[300px] h-[300px] bg-black rounded-full overflow-hidden group cursor-pointer"
                     onClick={() => {
                       fileRef.current.click();
                     }}
